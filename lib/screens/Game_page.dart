@@ -1,9 +1,6 @@
 // ignore: file_names
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:quizapp/models/models.dart';
-import 'package:quizapp/utils/getTheme.dart';
 import 'package:quizapp/utils/themeData.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
@@ -71,7 +68,7 @@ class _GamePageState extends State<GamePage> {
               return SizedBox(
                 height: height - 350,
                 width: width,
-                child: contentModal(context),
+                child: const ContentModalStart(),
               );
             },
           ),
@@ -91,12 +88,37 @@ class _GamePageState extends State<GamePage> {
               var height = MediaQuery.of(context).size.height;
               var width = MediaQuery.of(context).size.width;
 
-              return Card(
+              return SizedBox(
+                height: height - 450,
+                width: width,
                 child: Column(
                   children: [
+                    Image.asset(
+                      "lib/assets/lose.gif",
+                      height: 300.0,
+                      width: 300.0,
+                    ),
                     Text(
                       title,
-                      style: AppTheme.textTheme.headline6,
+                      style: AppTheme.textTheme.headline5,
+                    ),
+                    Center(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 300,
+                        decoration: const BoxDecoration(
+                            gradient: AppTheme.gradientBackground),
+                        child: TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Center(
+                            child: Text(
+                              "A jugar",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -123,6 +145,11 @@ class _GamePageState extends State<GamePage> {
       colorBackground = Colors.red[700];
       indexTap = index;
     });
+    Future.delayed(const Duration(seconds: 5));
+    showModalRespoonse(
+        imageURL:
+            'https://images.cults3d.com/gNmCucguF_950khaXUHO3dVUZLM=/516x516/https://files.cults3d.com/uploaders/19933232/illustration-file/58d154fb-ebc1-4f8b-bd76-a53f7c5c1ef5/2022_01_17_00_12_48_Pok%C3%A9ball_normal.pdf_et_1_page_suppl%C3%A9mentaire_Personnel_Microsoft_Edge.png',
+        title: 'Respuesta incorrecta');
   }
 
   @override
@@ -137,7 +164,8 @@ class _GamePageState extends State<GamePage> {
         ),
         body: Container(
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(gradient: AppTheme.gradientBackground),
+          decoration:
+              const BoxDecoration(gradient: AppTheme.gradientBackground),
           child: Column(
             children: [
               const SizedBox(height: 30),
@@ -182,129 +210,6 @@ class _GamePageState extends State<GamePage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget contentModal(BuildContext context) {
-    return ListView(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 45),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Selecciona una dificultad",
-                  style: AppTheme.textTheme.headline6
-                      ?.copyWith(color: Colors.black),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.only(left: 12, right: 12),
-                          backgroundColor: AppTheme.primaryColor),
-                      onPressed: null,
-                      child: Text(
-                        "Facíl",
-                        style: AppTheme.textTheme.bodyText2,
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: AppTheme.primaryColor),
-                      onPressed: null,
-                      child: Text(
-                        "Medio",
-                        style: AppTheme.textTheme.bodyText2,
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: AppTheme.primaryColor),
-                      onPressed: null,
-                      child: Text(
-                        "Pro",
-                        style: AppTheme.textTheme.bodyText2,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Selecciona una categoria",
-                  style: AppTheme.textTheme.headline6
-                      ?.copyWith(color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                TypeAheadField(
-                  textFieldConfiguration: TextFieldConfiguration(
-                    style: DefaultTextStyle.of(context)
-                        .style
-                        .copyWith(fontSize: 14, color: Colors.white),
-                    decoration: const InputDecoration(
-                      hintText: "Busca o selecciona una categoria",
-                      hintStyle: TextStyle(color: Colors.white),
-                      fillColor: AppTheme.primaryColor,
-                      filled: true,
-                    ),
-                  ),
-                  suggestionsCallback: (pattern) {
-                    return ["oki", "oki2"].toList();
-                  },
-                  suggestionsBoxDecoration: const SuggestionsBoxDecoration(
-                    shadowColor: Color.fromARGB(34, 173, 151, 229),
-                    color: Colors.white,
-                  ),
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(
-                        suggestion.toString(),
-                        style: AppTheme.textTheme.headline6
-                            ?.copyWith(fontWeight: FontWeight.w400),
-                      ),
-                    );
-                  },
-                  onSuggestionSelected: (suggestion) {},
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 300,
-                    decoration: const BoxDecoration(
-                        gradient: AppTheme.gradientBackground),
-                    child: TextButton(
-                      onPressed: () => Navigator.pop(context, 'OK'),
-                      child: const Center(
-                        child: Text(
-                          "A jugar",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

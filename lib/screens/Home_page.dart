@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppTheme.primaryColor,
         automaticallyImplyLeading: false,
         toolbarHeight: 35,
         elevation: 0,
